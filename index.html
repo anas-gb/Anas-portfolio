@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -32,7 +32,7 @@
 --bg:#f8fafc;
 --text:#0f172a;
 --muted:#475569;
---card:rgba(255,255,255,.9);
+--card:rgba(255,255,255,.95);
 --nav:rgba(248,250,252,.95);
 --line:rgba(15,23,42,.15);
 --primary:#0f766e;
@@ -41,6 +41,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
 font-family:'Outfit',sans-serif;
 background:var(--bg);
@@ -69,10 +70,9 @@ padding:14px 0;
 }
 
 .brand{
-font-family:'Space Mono',monospace;
 font-weight:700;
-color:var(--text);
 text-decoration:none;
+color:var(--text);
 }
 
 .menu{
@@ -99,7 +99,7 @@ padding:6px 12px;
 
 .mobile-toggle{
 display:none;
-font-size:1.3rem;
+font-size:1.4rem;
 background:none;
 border:none;
 color:var(--text);
@@ -180,21 +180,22 @@ color:var(--muted);
 margin-bottom:20px;
 }
 
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:.7s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
 footer{
 border-top:1px solid var(--line);
 padding:30px 0;
 text-align:center;
 color:var(--muted);
-}
-
-.reveal{
-opacity:0;
-transform:translateY(40px);
-transition:all .7s ease;
-}
-.reveal.active{
-opacity:1;
-transform:translateY(0);
 }
 
 .whatsapp-float{
@@ -240,11 +241,12 @@ border:1px solid var(--line);
 <nav class="nav">
 <div class="container nav-inner">
 <a class="brand">AZNORIX</a>
+
 <button class="mobile-toggle" id="mobileToggle">☰</button>
 
 <div class="menu" id="menu">
-<a href="#services">Services</a>
-<a href="#contact">Contact</a>
+<a href="#services" data-i18n="navServices">Services</a>
+<a href="#contact" data-i18n="navContact">Contact</a>
 <a href="/portfolio/">Portfolio</a>
 
 <button class="pill" id="themeToggle">☀️</button>
@@ -260,74 +262,140 @@ border:1px solid var(--line);
 
 <section class="hero container reveal">
 <div>
-<h1>Modern Web & App Development Studio</h1>
-<p class="subtitle">
-Aznorix builds scalable, performance-driven digital systems for startups and businesses.
+<h1 data-i18n="heroTitle">Modern Web & App Development Studio</h1>
+<p class="subtitle" data-i18n="heroSub">
+Aznorix builds scalable digital systems.
 </p>
 
 <div class="cta-row">
-<a class="btn primary" href="#contact">Start a Project</a>
+<a class="btn primary" href="#contact" data-i18n="heroBtn">Start a Project</a>
 <a class="btn" href="https://wa.me/923393041514" target="_blank">WhatsApp</a>
 </div>
 </div>
 </section>
 
 <section id="services" class="container reveal">
-<h2 class="section-title">What We Do</h2>
-<p class="section-sub">
-Clean architecture. Scalable systems. Production-ready delivery.
+<h2 class="section-title" data-i18n="servicesTitle">What We Do</h2>
+<p class="section-sub" data-i18n="servicesSub">
+Clean architecture. Scalable systems.
 </p>
 
 <div class="grid-3">
 <div class="card">
-<h3>Web Development</h3>
-<p>High-performance websites built for real business growth.</p>
+<h3 data-i18n="s1t">Web Development</h3>
+<p data-i18n="s1d">High-performance websites built for growth.</p>
 </div>
 
 <div class="card">
-<h3>Mobile Apps</h3>
-<p>Android apps engineered with scalable backend logic.</p>
+<h3 data-i18n="s2t">Mobile Apps</h3>
+<p data-i18n="s2d">Android apps engineered with scalable logic.</p>
 </div>
 
 <div class="card">
-<h3>Custom Software</h3>
-<p>Automation tools and tailored digital solutions.</p>
+<h3 data-i18n="s3t">Custom Software</h3>
+<p data-i18n="s3d">Automation tools and tailored solutions.</p>
 </div>
 </div>
 </section>
 
 <section id="contact" class="container reveal">
-<h2 class="section-title">Start Your Project</h2>
-<p class="section-sub">Tell us about your idea and we’ll respond quickly.</p>
-
+<h2 class="section-title" data-i18n="contactTitle">Start Your Project</h2>
 <form action="https://formsubmit.co/anasgb496@outlook.com" method="POST" class="card">
 <input type="hidden" name="_captcha" value="false">
 <input type="text" name="name" placeholder="Your Name" required style="width:100%;margin-bottom:12px;padding:10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);">
 <input type="email" name="email" placeholder="Your Email" required style="width:100%;margin-bottom:12px;padding:10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);">
 <textarea name="message" rows="4" placeholder="Describe your project..." required style="width:100%;margin-bottom:12px;padding:10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);"></textarea>
-<button class="btn primary" type="submit">Send Message</button>
+<button class="btn primary" type="submit" data-i18n="sendBtn">Send Message</button>
 </form>
 </section>
 
 <footer>
-© 2026 Aznorix — Independent Software Studio
+© 2026 Aznorix
 </footer>
 
 <a href="https://wa.me/923393041514" class="whatsapp-float" target="_blank">💬</a>
 
 <script>
-const menu=document.getElementById("menu");
-document.getElementById("mobileToggle").onclick=()=>menu.classList.toggle("show");
+const translations={
+en:{
+navServices:"Services",
+navContact:"Contact",
+heroTitle:"Modern Web & App Development Studio",
+heroSub:"Aznorix builds scalable, performance-driven digital systems.",
+heroBtn:"Start a Project",
+servicesTitle:"What We Do",
+servicesSub:"Clean architecture. Scalable systems.",
+s1t:"Web Development",
+s1d:"High-performance websites built for growth.",
+s2t:"Mobile Apps",
+s2d:"Android apps engineered with scalable logic.",
+s3t:"Custom Software",
+s3d:"Automation tools and tailored solutions.",
+contactTitle:"Start Your Project",
+sendBtn:"Send Message"
+},
+ur:{
+navServices:"سروسز",
+navContact:"رابطہ",
+heroTitle:"ماڈرن ویب اور ایپ ڈیولپمنٹ اسٹوڈیو",
+heroSub:"Aznorix اسکیل ایبل اور پرفارمنس فوکسڈ سسٹمز بناتا ہے۔",
+heroBtn:"پروجیکٹ شروع کریں",
+servicesTitle:"ہم کیا کرتے ہیں",
+servicesSub:"صاف آرکیٹیکچر اور مضبوط سسٹمز۔",
+s1t:"ویب ڈیولپمنٹ",
+s1d:"تیز اور جدید ویب سائٹس۔",
+s2t:"موبائل ایپس",
+s2d:"مضبوط اینڈرائیڈ ایپس۔",
+s3t:"کسٹم سافٹ ویئر",
+s3d:"ڈیجیٹل ٹولز اور آٹومیشن۔",
+contactTitle:"اپنا پروجیکٹ شروع کریں",
+sendBtn:"پیغام بھیجیں"
+},
+ar:{
+navServices:"الخدمات",
+navContact:"تواصل",
+heroTitle:"استوديو تطوير ويب وتطبيقات حديث",
+heroSub:"Aznorix يبني أنظمة رقمية قابلة للتوسع.",
+heroBtn:"ابدأ مشروعك",
+servicesTitle:"ماذا نقدم",
+servicesSub:"هندسة نظيفة وأنظمة قابلة للتوسع.",
+s1t:"تطوير الويب",
+s1d:"مواقع حديثة وسريعة.",
+s2t:"تطوير التطبيقات",
+s2d:"تطبيقات أندرويد قوية.",
+s3t:"برمجيات مخصصة",
+s3d:"حلول وأدوات رقمية.",
+contactTitle:"ابدأ مشروعك",
+sendBtn:"إرسال"
+}
+};
+
+function applyLang(lang){
+const dict=translations[lang]||translations.en;
+document.documentElement.lang=lang;
+document.documentElement.dir=(lang==="ar"||lang==="ur")?"rtl":"ltr";
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const key=el.getAttribute("data-i18n");
+if(dict[key]) el.textContent=dict[key];
+});
+localStorage.setItem("lang",lang);
+}
+
+const langSwitcher=document.getElementById("langSwitcher");
+const savedLang=localStorage.getItem("lang")||"en";
+langSwitcher.value=savedLang;
+applyLang(savedLang);
+langSwitcher.addEventListener("change",e=>applyLang(e.target.value));
 
 const root=document.documentElement;
+const themeToggle=document.getElementById("themeToggle");
 const savedTheme=localStorage.getItem("theme")||"light";
 root.classList.toggle("theme-light",savedTheme==="light");
-document.getElementById("themeToggle").textContent=savedTheme==="light"?"☀️":"🌙";
-
-document.getElementById("themeToggle").onclick=()=>{
+themeToggle.textContent=savedTheme==="light"?"☀️":"🌙";
+themeToggle.onclick=()=>{
 const isLight=root.classList.toggle("theme-light");
 localStorage.setItem("theme",isLight?"light":"dark");
-document.getElementById("themeToggle").textContent=isLight?"☀️":"🌙";
+themeToggle.textContent=isLight?"☀️":"🌙";
 };
 
 const observer=new IntersectionObserver(entries=>{
@@ -335,8 +403,9 @@ entries.forEach(entry=>{
 if(entry.isIntersecting) entry.target.classList.add("active");
 });
 },{threshold:.2});
-
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+document.getElementById("mobileToggle").onclick=()=>menu.classList.toggle("show");
 </script>
 
 </body>
