@@ -1,590 +1,328 @@
 <!DOCTYPE html>
 <html lang="en" class="theme-light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anas | App / web Designer & Software Engineer</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #020617;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --card: rgba(15, 23, 42, 0.7);
-      --nav: rgba(2, 6, 23, 0.85);
-      --line: rgba(148, 163, 184, 0.18);
-      --primary: #14b8a6;
-      --secondary: #f97316;
-      --chip: rgba(15, 23, 42, 0.6);
-      --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .theme-light {
-      --bg: #f8fafc;
-      --text: #0f172a;
-      --muted: #475569;
-      --card: rgba(255, 255, 255, 0.8);
-      --nav: rgba(248, 250, 252, 0.85);
-      --line: rgba(15, 23, 42, 0.15);
-      --primary: #0f766e;
-      --secondary: #ea580c;
-      --chip: rgba(226, 232, 240, 0.9);
-      --shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.2);
-    }
+<title>Anas | Founder of Aznorix | Software Engineer</title>
+<meta name="description" content="Anas is the founder of Aznorix, specializing in scalable web applications, Android development, and performance-focused software systems.">
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-      transition: background .35s ease, color .35s ease;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-    [dir="rtl"] body { font-family: 'Outfit', sans-serif; }
+<style>
+:root{
+--bg:#020617;
+--text:#e2e8f0;
+--muted:#94a3b8;
+--card:rgba(15,23,42,.7);
+--nav:rgba(2,6,23,.9);
+--line:rgba(148,163,184,.18);
+--primary:#14b8a6;
+--secondary:#f97316;
+--chip:rgba(15,23,42,.6);
+}
 
-    #bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      opacity: 0.5;
-    }
+.theme-light{
+--bg:#f8fafc;
+--text:#0f172a;
+--muted:#475569;
+--card:rgba(255,255,255,.95);
+--nav:rgba(248,250,252,.95);
+--line:rgba(15,23,42,.15);
+--primary:#0f766e;
+--secondary:#ea580c;
+--chip:rgba(226,232,240,.9);
+}
 
-    .loader {
-      position: fixed;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      background: var(--bg);
-      z-index: 9999;
-      transition: opacity .5s ease;
-      font-family: 'Space Mono', monospace;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:'Outfit',sans-serif;
+background:var(--bg);
+color:var(--text);
+transition:.3s ease;
+overflow-x:hidden;
+}
 
-    .container { width: min(1150px, 92%); margin: 0 auto; }
+.container{width:min(1100px,92%);margin:auto}
 
-    .nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-      background: var(--nav);
-      border-bottom: 1px solid var(--line);
-    }
+.nav{
+position:fixed;
+top:0;
+width:100%;
+background:var(--nav);
+border-bottom:1px solid var(--line);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
 
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 0;
-      gap: 12px;
-    }
+.nav-inner{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 0;
+}
 
-    .brand { font-family: 'Space Mono', monospace; font-weight: 700; text-decoration: none; color: var(--text); }
-    .brand b { color: var(--secondary); }
+.brand{
+font-weight:700;
+color:var(--text);
+text-decoration:none;
+}
 
-    .menu { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-    .menu a, .menu button, .menu select {
-      color: var(--text);
-      background: transparent;
-      border: none;
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: .93rem;
-    }
+.menu{
+display:flex;
+gap:18px;
+align-items:center;
+}
 
-    .pill {
-      border: 1px solid var(--line) !important;
-      background: var(--chip) !important;
-      border-radius: 999px;
-      padding: 8px 12px;
-    }
+.menu a,.menu button,.menu select{
+background:none;
+border:none;
+color:var(--text);
+font-weight:600;
+cursor:pointer;
+font-size:.9rem;
+}
 
-    .hero {
-      min-height: 100vh;
-      padding-top: 90px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      position: relative;
-      isolation: isolate;
-    }
+.pill{
+border:1px solid var(--line)!important;
+background:var(--chip)!important;
+border-radius:999px;
+padding:6px 12px;
+}
 
-    .blob {
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.23;
-      z-index: -1;
-      animation: blob 8s infinite ease-in-out;
-    }
+.mobile-toggle{
+display:none;
+font-size:1.4rem;
+background:none;
+border:none;
+color:var(--text);
+cursor:pointer;
+}
 
-    .blob.one { background: var(--primary); top: 20%; left: 10%; }
-    .blob.two { background: var(--secondary); top: 24%; right: 12%; animation-delay: 2s; }
+section{padding:100px 0}
 
-    @keyframes blob {
-      0%, 100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(22px,-30px) scale(1.08); }
-      66% { transform: translate(-20px,20px) scale(.95); }
-    }
+.hero{
+min-height:80vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding-top:80px;
+}
 
-    .eyebrow { color: var(--primary); font-family: 'Space Mono', monospace; margin-bottom: 10px; }
-    h1 {
-      font-size: clamp(2rem, 7vw, 5rem);
-      line-height: 1.05;
-      margin-bottom: 12px;
-    }
-    .gradient {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      max-width: 780px;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: clamp(1rem, 2.6vw, 1.35rem);
-    }
+h1{
+font-size:clamp(2.4rem,6vw,4rem);
+margin-bottom:15px;
+}
 
-    .cta-row { margin-top: 24px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
-    .home-info{margin-top:26px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;text-align:left}
-    .home-info .mini{border:1px solid var(--line);background:var(--chip);border-radius:12px;padding:12px}
-    .home-info h4{font-size:.9rem;margin-bottom:4px;color:var(--primary)}
-    .home-info p{font-size:.88rem;color:var(--muted)}
-    .btn {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px 18px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 700;
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      transition: transform .25s ease, background .25s ease;
-      background: var(--chip);
-    }
-    .btn.primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #fff; border: none; }
-    .btn:hover { transform: translateY(-3px); }
+.subtitle{
+max-width:700px;
+margin:auto;
+color:var(--muted);
+font-size:clamp(1rem,2.4vw,1.2rem);
+}
 
-    section { padding: 80px 0; }
-    .section-title { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 10px; }
-    .section-sub { color: var(--muted); margin-bottom: 26px; }
+.btn{
+border-radius:10px;
+padding:12px 18px;
+text-decoration:none;
+font-weight:700;
+border:1px solid var(--line);
+background:var(--chip);
+color:var(--text);
+transition:.25s ease;
+display:inline-block;
+}
 
-    .roles {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: color-mix(in oklab, var(--bg) 85%, transparent);
-    }
-    .roles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 18px;
-      text-align: center;
-      padding: 24px 0;
-    }
+.btn.primary{
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+color:#fff;
+border:none;
+}
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      transition: transform .3s ease, border-color .3s ease;
-    }
-    .card:hover { transform: translateY(-6px); border-color: color-mix(in oklab, var(--primary) 40%, var(--line)); }
+.btn:hover{transform:translateY(-3px)}
 
-    .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 20px; align-items: center; }
-    .about-photo {
-      background: linear-gradient(145deg, color-mix(in oklab, var(--primary) 35%, transparent), color-mix(in oklab, var(--secondary) 28%, transparent));
-      border-radius: 26px;
-      padding: 14px;
-    }
-    .about-photo img { width: 100%; border-radius: 20px; display: block; }
-    .no-photo {
-      min-height: 280px;
-      border-radius: 20px;
-      border: 1px dashed var(--line);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      color: var(--muted);
-      background: color-mix(in oklab, var(--bg) 70%, transparent);
-      padding: 20px;
-      font-weight: 600;
-    }
+.grid-3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-top:30px;
+}
 
-    .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
-    .skill-chip { border: 1px solid var(--line); background: var(--chip); border-radius: 999px; padding: 7px 11px; display: inline-block; margin: 4px 6px 0 0; }
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:18px;
+padding:22px;
+}
 
-    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-    .filter-btn { border: 1px solid var(--line); background: var(--chip); color: var(--text); padding: 9px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; }
-    .filter-btn.active { background: var(--text); color: var(--bg); }
+.section-title{
+font-size:clamp(1.6rem,4vw,2.3rem);
+margin-bottom:10px;
+}
 
-    .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
-    .project-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      min-height: 300px;
-      border: 1px solid var(--line);
-      background: #000;
-      transition: transform .3s ease;
-    }
-    .project-card:hover { transform: translateY(-6px); }
-    .project-card img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-      transform: scale(1.03); transition: transform .45s ease, filter .45s ease;
-      filter: brightness(.74) blur(0.3px);
-    }
-    .project-card:hover img { transform: scale(1.12); filter: brightness(.6); }
-    .project-overlay {
-      position: absolute; inset: auto 0 0 0;
-      background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.35), transparent);
-      padding: 18px;
-    }
-    .project-cat { font-size: .76rem; letter-spacing: .07em; text-transform: uppercase; color: var(--primary); }
-    .project-title { font-size: 1.25rem; margin: 6px 0; }
-    .project-text { color: #d7dbe4; font-size: .92rem; margin-bottom: 9px; }
-    .project-link { color: #fff; text-decoration: none; font-weight: 700; }
+.section-sub{
+color:var(--muted);
+margin-bottom:20px;
+}
 
-    .contact-wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 16px; }
-    .input { width: 100%; background: transparent; border: 1px solid var(--line); color: var(--text); border-radius: 10px; padding: 11px 12px; }
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:.7s ease;
+}
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
 
-    footer { border-top: 1px solid var(--line); padding: 28px 0; text-align: center; color: var(--muted); }
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+border-radius:50%;
+width:55px;
+height:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+text-decoration:none;
+box-shadow:0 8px 20px rgba(0,0,0,.3);
+z-index:1000;
+}
 
-    .reveal { opacity: 0; transform: translateY(35px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-
-    .mobile-toggle { display: none; }
-
-    @media (max-width: 1000px) {
-      .project-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .skills-grid { grid-template-columns: 1fr; }
-      .about-grid, .contact-wrap { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 760px) {
-      .menu { display: none; width: 100%; flex-direction: column; align-items: flex-start; padding: 8px 0; }
-      .menu.show { display: flex; }
-      .mobile-toggle { display: inline-block; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: transparent; color: var(--text); }
-      .roles-grid, .project-grid, .home-info { grid-template-columns: 1fr; }
-    }
-  </style>
+@media(max-width:900px){
+.grid-3{grid-template-columns:1fr}
+.menu{
+position:absolute;
+top:60px;
+right:0;
+background:var(--nav);
+flex-direction:column;
+align-items:flex-start;
+width:200px;
+padding:15px;
+display:none;
+border:1px solid var(--line);
+}
+.menu.show{display:flex}
+.mobile-toggle{display:block}
+}
+</style>
 </head>
+
 <body>
-  <div id="loader" class="loader"><span>&lt;Loading/&gt;</span></div>
-  <canvas id="bg-canvas"></canvas>
 
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#home">ANAS<b>.exe</b></a>
-      <button class="mobile-toggle" id="mobileToggle">☰</button>
-      <div class="menu" id="menu">
-        <a href="#home" data-i18n="navHome">Home</a>
-        <a href="#about" data-i18n="navAbout">About</a>
-        <a href="#skills" data-i18n="navSkills">Skills</a>
-        <a href="#portfolio" data-i18n="navWork">Work</a>
-        <a href="#contact" data-i18n="navContact">Contact</a>
-        <button class="pill" id="themeToggle" aria-label="Toggle Theme">☀️</button>
-        <select class="pill" id="langSwitcher" aria-label="Language">
-          <option value="en">English</option>
-          <option value="ar">العربية</option>
-          <option value="ur">اردو</option>
-        </select>
-      </div>
-    </div>
-  </nav>
+<nav class="nav">
+<div class="container nav-inner">
+<a class="brand" href="/">AZNORIX</a>
+<button class="mobile-toggle" id="mobileToggle">☰</button>
+<div class="menu" id="menu">
+<a href="/">Home</a>
+<a href="#about">About</a>
+<a href="#skills">Skills</a>
+<a href="#contact">Contact</a>
+<button class="pill" id="themeToggle">☀️</button>
+</div>
+</div>
+</nav>
 
-  <section id="home" class="hero container reveal active">
-    <div class="blob one"></div>
-    <div class="blob two"></div>
-    <div>
-      <p class="eyebrow" data-i18n="heroEyebrow">Hello, I'm Anas from Karachi, Pakistan.</p>
-      <h1>
-        <span data-i18n="heroTitleA">Building</span><br>
-        <span class="gradient" data-i18n="heroTitleB">Digital Reality</span>
-      </h1>
-      <p class="subtitle" data-i18n="heroSubtitle">3D artist, designer, and software engineer building modern creative digital experiences.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="#portfolio" data-i18n="heroBtnWork">View My Work</a>
-        <a class="btn" href="#contact" data-i18n="heroBtnContact">Contact Me</a>
-      </div>
-      <div class="home-info">
-        <div class="mini"><h4 data-i18n="homeCard1T">What I Build</h4><p data-i18n="homeCard1D">Interactive websites, gameplay prototypes, and production-ready UI systems.</p></div>
-        <div class="mini"><h4 data-i18n="homeCard2T">Core Strength</h4><p data-i18n="homeCard2D">Performance-focused frontend engineering with premium visual motion.</p></div>
-        <div class="mini"><h4 data-i18n="homeCard3T">Why Hire Me</h4><p data-i18n="homeCard3D">Fast delivery, clean architecture, and creative execution across design + code.</p></div>
-      </div>
-    </div>
-  </section>
+<section class="hero container reveal">
+<div>
+<p style="color:var(--primary);font-weight:600;margin-bottom:10px;">
+Founder of Aznorix
+</p>
+<h1>Software Engineer & System Builder</h1>
+<p class="subtitle">
+I design and engineer scalable web applications, Android systems, and performance-focused digital products.
+</p>
 
-  <div class="roles reveal">
-    <div class="container roles-grid">
-      <div><h3 data-i18n="role1">Game Developer</h3><p class="section-sub" data-i18n="role1Sub">Unreal Engine • Godot</p></div>
-      <div><h3 data-i18n="role2">3D Artist</h3><p class="section-sub" data-i18n="role2Sub">Blender • 3D Max</p></div>
-      <div><h3 data-i18n="role3">Software Engineer</h3><p class="section-sub" data-i18n="role3Sub">App Dev • Web • Automation</p></div>
-    </div>
-  </div>
+<div style="margin-top:25px;">
+<a class="btn primary" href="https://wa.me/923393041514" target="_blank">
+Start a Conversation
+</a>
+</div>
+</div>
+</section>
 
-  <section id="about" class="container reveal">
-    <h2 class="section-title" data-i18n="aboutTitle">About Me</h2>
-    <p class="section-sub" data-i18n="aboutSub">I bridge technical logic with artistic vision to craft worlds, not just code.</p>
-    <div class="about-grid">
-      <div class="about-photo"><div class="no-photo" data-i18n="aboutNoPhoto">Profile picture removed by request.</div></div>
-      <div class="card">
-        <p data-i18n="aboutP1">With a background in computer science and digital art, I focus on building performant, immersive, and visually polished products. From rendering optimization in C++ to high quality Blender models and production-ready web interfaces.</p>
-        <br>
-        <p data-i18n="aboutP2">Available for freelance and collaborations across game prototypes, 3D pipelines, and custom software/web builds.</p>
-      </div>
-    </div>
-  </section>
+<section id="about" class="container reveal">
+<h2 class="section-title">About</h2>
+<p class="section-sub">
+I founded Aznorix as an independent software studio focused on building scalable digital systems for startups and businesses.
+</p>
 
-  <section id="skills" class="container reveal">
-    <h2 class="section-title" data-i18n="skillsTitle">Technical Arsenal</h2>
-    <p class="section-sub" data-i18n="skillsSub">A practical stack across development, game engines, and creative tooling.</p>
-    <div class="skills-grid">
-      <div class="card"><h3 data-i18n="skillsDev">Development</h3><span class="skill-chip">C++</span><span class="skill-chip">Python</span><span class="skill-chip">C#</span><span class="skill-chip">JavaScript</span><span class="skill-chip">.NET</span></div>
-      <div class="card"><h3 data-i18n="skillsEngine">Game Engines</h3><span class="skill-chip">Unreal Engine 5</span><span class="skill-chip">Godot</span><span class="skill-chip">SFML</span><span class="skill-chip">Shader Graph</span></div>
-      <div class="card"><h3 data-i18n="skillsArt">3D / Design Tools</h3><span class="skill-chip">Blender</span><span class="skill-chip">3D Max</span><span class="skill-chip">Photoshop</span><span class="skill-chip">After Effects</span><span class="skill-chip">Figma</span></div>
-    </div>
-  </section>
+<div class="card">
+<p>
+With a background in computer science and digital systems design, I specialize in performance-focused frontend engineering, structured backend logic, and clean production-ready architecture.
+</p>
+</div>
+</section>
 
+<section id="skills" class="container reveal">
+<h2 class="section-title">Technical Stack</h2>
 
-  <section id="contact" class="container reveal">
-    <h2 class="section-title" data-i18n="contactTitle">Let's Create Together</h2>
-    <p class="section-sub" data-i18n="contactSub">Open for freelance opportunities and collaborations.</p>
-    <div class="contact-wrap">
-      <div class="card">
-        <p>✉️ anasgb496@outlook.com</p>
-        <p>📍 Karachi, Sindh, Pakistan</p>
-        <p>🔗 GitHub: github.com/Anas-gb</p>
-        <p>📞 +92 339 3041514</p>
-        <p>💼 Fiverr: https://www.fiverr.com/s/KeAKByE</p>
-      </div>
-      <form class="card" onsubmit="event.preventDefault()">
-        <input class="input" type="text" data-i18n-placeholder="phName" placeholder="Name"><br><br>
-        <input class="input" type="email" data-i18n-placeholder="phEmail" placeholder="Email"><br><br>
-        <textarea class="input" rows="4" data-i18n-placeholder="phMsg" placeholder="Tell me about your project..."></textarea><br><br>
-        <button class="btn primary" type="submit" data-i18n="sendBtn">Send Message</button>
-      </form>
-    </div>
-  </section>
+<div class="grid-3">
+<div class="card">
+<h3>Languages</h3>
+<p>C++ • Python • C# • JavaScript</p>
+</div>
 
-  <footer>
-    <div class="container">© 2026 Anas</div>
-  </footer>
+<div class="card">
+<h3>Development</h3>
+<p>Web Applications • Android Apps • Automation Tools</p>
+</div>
 
-  <script>
-    const i18n = {
-      en: {
-        navHome:'Home', navAbout:'About', navSkills:'Skills', navWork:'Work', navContact:'Contact',
-        heroEyebrow:'Hello, I\'m Anas from Karachi, Pakistan.', heroTitleA:'Building', heroTitleB:'Digital Reality',
-        heroSubtitle:'3D artist, designer, and software engineer building modern creative digital experiences.',
-        heroBtnWork:'View My Work', heroBtnContact:'Contact Me',
-        homeCard1T:'What I Build', homeCard1D:'Modern creative portfolios, apps, and high-impact web experiences.',
-        homeCard2T:'Primary Skills', homeCard2D:'App dev, Blender, C++, Python, JavaScript, and Web Development.',
-        homeCard3T:'Why Hire Me', homeCard3D:'Fast delivery, clean architecture, and creative execution across design + code.',
-        role1:'App Developer', role2:'3D Artist & Designer', role3:'Software Engineer', role1Sub:'App Dev • Web Development', role2Sub:'Blender • Creative Design', role3Sub:'C++ • Python • JavaScript',
-        aboutTitle:'About Me', aboutSub:'I bridge technical logic with artistic vision to craft worlds, not just code.',
-        aboutP1:'With a background in computer science and digital art, I focus on building performant, immersive, and visually polished products. From rendering optimization in C++ to high quality Blender models and production-ready web interfaces.',
-        aboutP2:'Available for freelance and collaborations across 3D art, design systems, app development, and custom software/web builds.',
-        skillsTitle:'Technical Arsenal', skillsSub:'A practical stack across development, game engines, and creative tooling.', skillsDev:'Development', skillsEngine:'Game Engines', skillsArt:'3D / Design Tools',
-        workTitle:'Selected Projects', workSub:'A curation of code, geometry, and gameplay.', fltAll:'All', fltGame:'Game Dev', flt3d:'3D Art', fltSoft:'Software', catGame:'Game Dev', cat3d:'3D Art', catSoftware:'Software', linkPlay:'Play →', linkView:'View →', linkRepo:'Repo →', linkRender:'Render →',
-        p1:'Fast-paced text puzzle game where every second counts.', p2:'Modeled and textured in Blender with cinematic lighting.', p3:'Gaming accessories store with complete front-end flow.',
-        p4:'A frantic 20-second rush through awkward social moments.', p5:'Python chatbot using OpenAI API and Gradio interface.', p6:'High-poly hard-surface model sculpted in Blender.',
-        contactTitle:"Let's Create Together", contactSub:'Open for freelance opportunities, Fiverr projects, and collaborations.', sendBtn:'Send Message',
-        phName:'Name', phEmail:'Email', phMsg:'Tell me about your project...', aboutNoPhoto:'Profile picture removed by request.'
-      },
-      ar: {
-        navHome:'الرئيسية', navAbout:'من أنا', navSkills:'المهارات', navWork:'الأعمال', navContact:'التواصل',
-        heroEyebrow:'مرحباً بالعالم، أنا حافظ أنس علي.', heroTitleA:'نبني', heroTitleB:'واقعاً رقمياً',
-        heroSubtitle:'أدمج تطوير الألعاب وفن ثلاثي الأبعاد والمؤثرات وتطوير البرمجيات لصناعة تجارب غامرة.',
-        heroBtnWork:'شاهد أعمالي', heroBtnContact:'تواصل معي',
-        homeCard1T:'ماذا أبني', homeCard1D:'مواقع تفاعلية ونماذج ألعاب وواجهات جاهزة للإنتاج.',
-        homeCard2T:'نقطة القوة', homeCard2D:'هندسة واجهات عالية الأداء مع حركة بصرية احترافية.',
-        homeCard3T:'لماذا تختارني', homeCard3D:'تسليم سريع، هيكلة نظيفة، وتنفيذ إبداعي بين التصميم والبرمجة.',
-        role1:'مطوّر ألعاب', role2:'فنان ثلاثي الأبعاد', role3:'مطوّر برمجيات', role1Sub:'أنريل إنجن • جودوت', role2Sub:'بلندر • 3D ماكس', role3Sub:'ويب • أدوات • أتمتة',
-        aboutTitle:'نبذة عني', aboutSub:'أجمع بين المنطق التقني والرؤية الفنية لصناعة عوالم، وليس مجرد كود.',
-        aboutP1:'بخلفية في علوم الحاسوب والفن الرقمي، أركز على بناء منتجات عالية الأداء وغامرة بصريًا. من تحسين الرندر في ++C إلى نماذج Blender وواجهات ويب جاهزة للإنتاج.',
-        aboutP2:'متاح للعمل الحر والتعاون في نماذج الألعاب وخطوط إنتاج 3D وتطوير حلول الويب والبرمجيات.',
-        skillsTitle:'ترسانة تقنية', skillsSub:'مجموعة عملية في التطوير ومحركات الألعاب وأدوات الإبداع.', skillsDev:'التطوير', skillsEngine:'محركات الألعاب', skillsArt:'أدوات 3D / التصميم',
-        workTitle:'مشاريع مختارة', workSub:'تجميع بين البرمجة والهندسة البصرية وتجارب اللعب.', fltAll:'الكل', fltGame:'ألعاب', flt3d:'ثلاثي الأبعاد', fltSoft:'برمجيات', catGame:'ألعاب', cat3d:'فن ثلاثي الأبعاد', catSoftware:'برمجيات', linkPlay:'العب ←', linkView:'شاهد ←', linkRepo:'المستودع ←', linkRender:'عرض ←',
-        p1:'لعبة ألغاز نصية سريعة حيث كل ثانية مهمة.', p2:'نمذجة وخامات في Blender بإضاءة سينمائية.', p3:'متجر إكسسوارات ألعاب بتدفق واجهات كامل.',
-        p4:'اندفاع سريع لمدة 20 ثانية عبر مواقف اجتماعية محرجة.', p5:'روبوت دردشة بايثون باستخدام OpenAI وGradio.', p6:'نموذج عالي التفاصيل مصمم في Blender.',
-        contactTitle:'لنصنع شيئاً رائعاً معاً', contactSub:'متاح لفرص العمل الحر والتعاون.', sendBtn:'إرسال الرسالة',
-        phName:'الاسم', phEmail:'البريد الإلكتروني', phMsg:'أخبرني عن مشروعك...', aboutNoPhoto:'تمت إزالة الصورة الشخصية حسب الطلب.'
-      },
-      ur: {
-        navHome:'ہوم', navAbout:'تعارف', navSkills:'مہارتیں', navWork:'کام', navContact:'رابطہ',
-        heroEyebrow:'ہیلو ورلڈ، میں حافظ انس علی ہوں۔', heroTitleA:'ہم بناتے ہیں', heroTitleB:'ڈیجیٹل ریئلٹی',
-        heroSubtitle:'میں گیم ڈیولپمنٹ، 3D آرٹ، GFX / VFX اور سافٹ ویئر ڈیولپمنٹ کو ملا کر امیسیو تجربات بناتا ہوں۔',
-        heroBtnWork:'میرا کام دیکھیں', heroBtnContact:'رابطہ کریں',
-        homeCard1T:'میں کیا بناتا ہوں', homeCard1D:'انٹرایکٹو ویب سائٹس، گیم پروٹوٹائپس، اور پروڈکشن ریڈی UI سسٹمز۔',
-        homeCard2T:'اہم مہارت', homeCard2D:'پرفارمنس فوکسڈ فرنٹ اینڈ انجینئرنگ اور پریمیم موشن۔',
-        homeCard3T:'مجھے کیوں ہائر کریں', homeCard3D:'تیز ڈیلیوری، صاف آرکیٹیکچر، اور ڈیزائن + کوڈ میں تخلیقی عملدرآمد۔',
-        role1:'گیم ڈیولپر', role2:'3D آرٹسٹ', role3:'سافٹ ویئر ڈیولپر', role1Sub:'انریل انجن • گوڈوٹ', role2Sub:'بلینڈر • 3D میکس', role3Sub:'ویب • ٹولز • آٹومیشن',
-        aboutTitle:'میرے بارے میں', aboutSub:'میں ٹیکنیکل لاجک اور تخلیقی وژن کو ملا کر دنیا بناتا ہوں، صرف کوڈ نہیں۔',
-        aboutP1:'کمپیوٹر سائنس اور ڈیجیٹل آرٹ کے پس منظر کے ساتھ میں پرفارمنس، امیسیو اور خوبصورت پروڈکٹس بناتا ہوں۔ C++ رینڈرنگ آپٹمائزیشن سے Blender ماڈلز اور پروڈکشن ویب انٹرفیس تک۔',
-        aboutP2:'فری لانس اور کولیبریشن کے لیے دستیاب ہوں—گیم پروٹوٹائپس، 3D پائپ لائنز، اور کسٹم ویب/سافٹ ویئر۔',
-        skillsTitle:'ٹیکنیکل آرسنل', skillsSub:'ڈیولپمنٹ، گیم انجنز اور کریئیٹو ٹولز کا عملی اسٹیک۔', skillsDev:'ڈیولپمنٹ', skillsEngine:'گیم انجنز', skillsArt:'3D / ڈیزائن ٹولز',
-        workTitle:'منتخب پروجیکٹس', workSub:'کوڈ، جیومیٹری اور گیم پلے کا امتزاج۔', fltAll:'سب', fltGame:'گیم ڈیولپمنٹ', flt3d:'3D آرٹ', fltSoft:'سافٹ ویئر', catGame:'گیم ڈیولپمنٹ', cat3d:'3D آرٹ', catSoftware:'سافٹ ویئر', linkPlay:'کھیلیں ←', linkView:'دیکھیں ←', linkRepo:'ریپو ←', linkRender:'رینڈر ←',
-        p1:'تیز رفتار ٹیکسٹ پزل گیم جہاں ہر سیکنڈ اہم ہے۔', p2:'Blender میں ماڈل اور ٹیکسچر، سینیماٹک لائٹنگ کے ساتھ۔', p3:'گیمنگ ایکسیسریز اسٹور، مکمل فرنٹ اینڈ فلو کے ساتھ۔',
-        p4:'20 سیکنڈ کی تیز اور مزاحیہ سوشل موومنٹس۔', p5:'Python چیٹ بوٹ، OpenAI API اور Gradio کے ساتھ۔', p6:'ہائی پولی ہارڈ سرفیس ماڈل، Blender میں۔',
-        contactTitle:'آئیں مل کر کچھ بہترین بنائیں', contactSub:'فری لانس اور کولیبریشن کے لیے دستیاب۔', sendBtn:'پیغام بھیجیں',
-        phName:'نام', phEmail:'ای میل', phMsg:'اپنے پروجیکٹ کے بارے میں بتائیں...', aboutNoPhoto:'درخواست کے مطابق پروفائل تصویر ہٹا دی گئی ہے۔'
-      }
-    };
+<div class="card">
+<h3>Tools</h3>
+<p>Blender • Unreal Engine • .NET • Git</p>
+</div>
+</div>
+</section>
 
-    function applyLang(lang) {
-      const dict = i18n[lang] || i18n.en;
-      document.documentElement.lang = lang;
-      document.documentElement.dir = ['ar', 'ur'].includes(lang) ? 'rtl' : 'ltr';
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
-        if (dict[k]) el.textContent = dict[k];
-      });
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const k = el.getAttribute('data-i18n-placeholder');
-        if (dict[k]) el.placeholder = dict[k];
-      });
-      localStorage.setItem('lang', lang);
-    }
+<section id="contact" class="container reveal">
+<h2 class="section-title">Contact</h2>
 
-    // Loader
-    window.addEventListener('load', () => {
-      const l = document.getElementById('loader');
-      setTimeout(() => {
-        l.style.opacity = '0';
-        setTimeout(() => l.style.display = 'none', 500);
-      }, 800);
-    });
+<div class="card">
+<p>📧 anasgb496@outlook.com</p>
+<p>📍 Karachi, Pakistan</p>
+<p>💻 GitHub: github.com/Anas-gb</p>
+<p>📱 WhatsApp: +92 339 3041514</p>
+</div>
+</section>
 
-    // Mobile menu
-    const mobileToggle = document.getElementById('mobileToggle');
-    const menu = document.getElementById('menu');
-    mobileToggle.addEventListener('click', () => menu.classList.toggle('show'));
+<footer>
+© 2026 Anas — Founder of Aznorix
+</footer>
 
-    // Dark/light mode
-    const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    root.classList.toggle('theme-light', savedTheme === 'light');
-    root.classList.toggle('theme-dark', savedTheme !== 'light');
-    themeToggle.textContent = savedTheme === 'light' ? '☀️' : '🌙';
-    themeToggle.addEventListener('click', () => {
-      const isLight = root.classList.toggle('theme-light');
-      root.classList.toggle('theme-dark', !isLight);
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      themeToggle.textContent = isLight ? '☀️' : '🌙';
-    });
+<a href="https://wa.me/923393041514" class="whatsapp-float" target="_blank">💬</a>
 
-    // Lang switcher
-    const langSwitcher = document.getElementById('langSwitcher');
-    const savedLang = localStorage.getItem('lang') || 'en';
-    langSwitcher.value = savedLang;
-    applyLang(savedLang);
-    langSwitcher.addEventListener('change', (e) => applyLang(e.target.value));
+<script>
+const menu=document.getElementById("menu");
+document.getElementById("mobileToggle").onclick=()=>menu.classList.toggle("show");
 
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    const revealFn = () => {
-      reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
-      });
-    };
-    window.addEventListener('scroll', revealFn);
-    revealFn();
+const root=document.documentElement;
+const themeToggle=document.getElementById("themeToggle");
+const savedTheme=localStorage.getItem("theme")||"light";
+root.classList.toggle("theme-light",savedTheme==="light");
+themeToggle.textContent=savedTheme==="light"?"☀️":"🌙";
 
-    // Project filtering
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.project-card');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        cards.forEach(c => {
-          c.style.display = (f === 'all' || c.dataset.category === f) ? 'block' : 'none';
-        });
-      });
-    });
+themeToggle.onclick=()=>{
+const isLight=root.classList.toggle("theme-light");
+localStorage.setItem("theme",isLight?"light":"dark");
+themeToggle.textContent=isLight?"☀️":"🌙";
+};
 
-    // Animated particle background
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let w = 0, h = 0;
-    const count = 55, maxDist = 140;
-    let particles = [];
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting) entry.target.classList.add("active");
+});
+},{threshold:.2});
 
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
 
-    class P {
-      constructor() {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.vx = (Math.random() - .5) * .45;
-        this.vy = (Math.random() - .5) * .45;
-        this.s = Math.random() * 1.8 + .8;
-      }
-      step() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > w) this.vx *= -1;
-        if (this.y < 0 || this.y > h) this.vy *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2);
-        const dark = !document.documentElement.classList.contains('theme-light');
-        ctx.fillStyle = dark ? 'rgba(20,184,166,.55)' : 'rgba(15,118,110,.35)';
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = Array.from({ length: count }, () => new P());
-    }
-
-    function tick() {
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const d = Math.hypot(dx, dy);
-          if (d < maxDist) {
-            const a = 1 - d / maxDist;
-            const dark = !document.documentElement.classList.contains('theme-light');
-            ctx.strokeStyle = dark ? `rgba(255,255,255,${a * .08})` : `rgba(15,23,42,${a * .07})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-        particles[i].step();
-        particles[i].draw();
-      }
-      requestAnimationFrame(tick);
-    }
-
-    resize();
-    initParticles();
-    tick();
-    window.addEventListener('resize', () => { resize(); initParticles(); });
-  </script>
 </body>
 </html>
