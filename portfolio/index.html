@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Anas | Founder of Aznorix | Software Engineer</title>
-<meta name="description" content="Anas is the founder of Aznorix, specializing in scalable web applications, Android development, and performance-focused software systems.">
+<title>ANAS | Founder of Aznorix | Software Engineer</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
@@ -35,6 +34,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
 font-family:'Outfit',sans-serif;
 background:var(--bg);
@@ -45,6 +45,7 @@ overflow-x:hidden;
 
 .container{width:min(1100px,92%);margin:auto}
 
+/* NAV */
 .nav{
 position:fixed;
 top:0;
@@ -63,9 +64,10 @@ padding:14px 0;
 }
 
 .brand{
-font-weight:700;
-color:var(--text);
+font-weight:800;
+letter-spacing:.5px;
 text-decoration:none;
+color:var(--text);
 }
 
 .menu{
@@ -74,7 +76,7 @@ gap:18px;
 align-items:center;
 }
 
-.menu a,.menu button,.menu select{
+.menu a,.menu button{
 background:none;
 border:none;
 color:var(--text);
@@ -99,20 +101,43 @@ color:var(--text);
 cursor:pointer;
 }
 
+/* HERO */
 section{padding:100px 0}
 
 .hero{
-min-height:80vh;
+position:relative;
+min-height:90vh;
 display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
+overflow:hidden;
 padding-top:80px;
 }
 
+.hero::before{
+content:"";
+position:absolute;
+width:700px;
+height:700px;
+background:radial-gradient(circle,var(--primary),transparent 70%);
+top:-250px;
+left:50%;
+transform:translateX(-50%);
+opacity:.15;
+animation:floatGlow 6s ease-in-out infinite alternate;
+z-index:-1;
+}
+
+@keyframes floatGlow{
+0%{transform:translateX(-50%) translateY(0)}
+100%{transform:translateX(-50%) translateY(40px)}
+}
+
 h1{
-font-size:clamp(2.4rem,6vw,4rem);
+font-size:clamp(2.8rem,6vw,4.2rem);
 margin-bottom:15px;
+font-weight:800;
 }
 
 .subtitle{
@@ -123,14 +148,14 @@ font-size:clamp(1rem,2.4vw,1.2rem);
 }
 
 .btn{
-border-radius:10px;
-padding:12px 18px;
+border-radius:12px;
+padding:13px 22px;
 text-decoration:none;
 font-weight:700;
 border:1px solid var(--line);
 background:var(--chip);
 color:var(--text);
-transition:.25s ease;
+transition:.3s ease;
 display:inline-block;
 }
 
@@ -138,10 +163,28 @@ display:inline-block;
 background:linear-gradient(90deg,var(--primary),var(--secondary));
 color:#fff;
 border:none;
+position:relative;
+overflow:hidden;
 }
 
-.btn:hover{transform:translateY(-3px)}
+.btn.primary::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+transition:.7s;
+}
 
+.btn.primary:hover::after{
+left:100%;
+}
+
+.btn:hover{transform:translateY(-4px)}
+
+/* CARDS */
 .grid-3{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -154,18 +197,16 @@ background:var(--card);
 border:1px solid var(--line);
 border-radius:18px;
 padding:22px;
+transition:.35s ease;
 }
 
-.section-title{
-font-size:clamp(1.6rem,4vw,2.3rem);
-margin-bottom:10px;
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 20px 50px rgba(0,0,0,.2);
+border-color:var(--primary);
 }
 
-.section-sub{
-color:var(--muted);
-margin-bottom:20px;
-}
-
+/* REVEAL */
 .reveal{
 opacity:0;
 transform:translateY(40px);
@@ -176,6 +217,18 @@ opacity:1;
 transform:translateY(0);
 }
 
+/* SCROLL BAR */
+#progressBar{
+position:fixed;
+top:0;
+left:0;
+height:3px;
+width:0%;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+z-index:2000;
+}
+
+/* WHATSAPP */
 .whatsapp-float{
 position:fixed;
 bottom:20px;
@@ -194,6 +247,7 @@ box-shadow:0 8px 20px rgba(0,0,0,.3);
 z-index:1000;
 }
 
+/* RESPONSIVE */
 @media(max-width:900px){
 .grid-3{grid-template-columns:1fr}
 .menu{
@@ -202,7 +256,6 @@ top:60px;
 right:0;
 background:var(--nav);
 flex-direction:column;
-align-items:flex-start;
 width:200px;
 padding:15px;
 display:none;
@@ -215,6 +268,8 @@ border:1px solid var(--line);
 </head>
 
 <body>
+
+<div id="progressBar"></div>
 
 <nav class="nav">
 <div class="container nav-inner">
@@ -235,9 +290,11 @@ border:1px solid var(--line);
 <p style="color:var(--primary);font-weight:600;margin-bottom:10px;">
 Founder of Aznorix
 </p>
-<h1>Software Engineer & System Builder</h1>
+
+<h1><span id="typing"></span></h1>
+
 <p class="subtitle">
-I design and engineer scalable web applications, Android systems, and performance-focused digital products.
+Software Engineer • System Architect • Performance Builder
 </p>
 
 <div style="margin-top:25px;">
@@ -249,60 +306,45 @@ Start a Conversation
 </section>
 
 <section id="about" class="container reveal">
-<h2 class="section-title">About</h2>
-<p class="section-sub">
-I founded Aznorix as an independent software studio focused on building scalable digital systems for startups and businesses.
-</p>
-
+<h2>About</h2>
 <div class="card">
 <p>
-With a background in computer science and digital systems design, I specialize in performance-focused frontend engineering, structured backend logic, and clean production-ready architecture.
+ANAS is the founder of Aznorix, focused on scalable web systems, Android development, and high-performance digital architecture.
 </p>
 </div>
 </section>
 
 <section id="skills" class="container reveal">
-<h2 class="section-title">Technical Stack</h2>
-
+<h2>Technical Stack</h2>
 <div class="grid-3">
-<div class="card">
-<h3>Languages</h3>
-<p>C++ • Python • C# • JavaScript</p>
-</div>
-
-<div class="card">
-<h3>Development</h3>
-<p>Web Applications • Android Apps • Automation Tools</p>
-</div>
-
-<div class="card">
-<h3>Tools</h3>
-<p>Blender • Unreal Engine • .NET • Git</p>
-</div>
+<div class="card"><h3>Languages</h3><p>C++ • Python • C# • JavaScript</p></div>
+<div class="card"><h3>Development</h3><p>Web Apps • Android • Automation</p></div>
+<div class="card"><h3>Tools</h3><p>Blender • Unreal • .NET • Git</p></div>
 </div>
 </section>
 
 <section id="contact" class="container reveal">
-<h2 class="section-title">Contact</h2>
-
+<h2>Contact</h2>
 <div class="card">
 <p>📧 anasgb496@outlook.com</p>
 <p>📍 Karachi, Pakistan</p>
-<p>💻 GitHub: github.com/Anas-gb</p>
-<p>📱 WhatsApp: +92 339 3041514</p>
+<p>💻 github.com/Anas-gb</p>
+<p>📱 +92 339 3041514</p>
 </div>
 </section>
 
-<footer>
-© 2026 Anas — Founder of Aznorix
+<footer style="text-align:center;padding:30px 0;color:var(--muted);">
+© 2026 ANAS — Founder of Aznorix
 </footer>
 
 <a href="https://wa.me/923393041514" class="whatsapp-float" target="_blank">💬</a>
 
 <script>
+// Mobile Menu
 const menu=document.getElementById("menu");
 document.getElementById("mobileToggle").onclick=()=>menu.classList.toggle("show");
 
+// Theme Toggle
 const root=document.documentElement;
 const themeToggle=document.getElementById("themeToggle");
 const savedTheme=localStorage.getItem("theme")||"light";
@@ -315,13 +357,33 @@ localStorage.setItem("theme",isLight?"light":"dark");
 themeToggle.textContent=isLight?"☀️":"🌙";
 };
 
+// Scroll Reveal
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting) entry.target.classList.add("active");
 });
 },{threshold:.2});
-
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+// Scroll Progress
+window.onscroll=()=>{
+let winScroll=document.documentElement.scrollTop;
+let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+document.getElementById("progressBar").style.width=(winScroll/height)*100+"%";
+};
+
+// Typing Animation
+const text="ANAS";
+let index=0;
+const typing=document.getElementById("typing");
+
+function typeEffect(){
+if(index<text.length){
+typing.textContent+=text.charAt(index);
+index++;
+setTimeout(typeEffect,90);
+}}
+typeEffect();
 </script>
 
 </body>
