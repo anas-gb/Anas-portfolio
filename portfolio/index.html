@@ -1,389 +1,264 @@
 <!DOCTYPE html>
-<html lang="en" class="theme-light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANAS | WebGL Portfolio</title>
 
-<title>ANAS | Founder of Aznorix | Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/examples/js/loaders/FontLoader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/examples/js/geometries/TextGeometry.js"></script>
 
 <style>
-:root{
---bg:#020617;
---text:#e2e8f0;
---muted:#94a3b8;
---card:rgba(15,23,42,.7);
---nav:rgba(2,6,23,.9);
---line:rgba(148,163,184,.18);
---primary:#14b8a6;
---secondary:#f97316;
---chip:rgba(15,23,42,.6);
-}
-
-.theme-light{
---bg:#f8fafc;
---text:#0f172a;
---muted:#475569;
---card:rgba(255,255,255,.95);
---nav:rgba(248,250,252,.95);
---line:rgba(15,23,42,.15);
---primary:#0f766e;
---secondary:#ea580c;
---chip:rgba(226,232,240,.9);
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 font-family:'Outfit',sans-serif;
-background:var(--bg);
-color:var(--text);
-transition:.3s ease;
+background:#0f172a;
+color:#ffffff;
 overflow-x:hidden;
 }
 
-.container{width:min(1100px,92%);margin:auto}
-
-/* NAV */
-.nav{
+canvas{
 position:fixed;
 top:0;
-width:100%;
-background:var(--nav);
-border-bottom:1px solid var(--line);
-backdrop-filter:blur(10px);
-z-index:1000;
+left:0;
+z-index:-1;
 }
 
-.nav-inner{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px 0;
-}
-
-.brand{
-font-weight:800;
-letter-spacing:.5px;
-text-decoration:none;
-color:var(--text);
-}
-
-.menu{
-display:flex;
-gap:18px;
-align-items:center;
-}
-
-.menu a,.menu button{
-background:none;
-border:none;
-color:var(--text);
-font-weight:600;
-cursor:pointer;
-font-size:.9rem;
-}
-
-.pill{
-border:1px solid var(--line)!important;
-background:var(--chip)!important;
-border-radius:999px;
-padding:6px 12px;
-}
-
-.mobile-toggle{
-display:none;
-font-size:1.4rem;
-background:none;
-border:none;
-color:var(--text);
-cursor:pointer;
-}
-
-/* HERO */
-section{padding:100px 0}
-
-.hero{
-position:relative;
-min-height:90vh;
+section{
+min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
-overflow:hidden;
-padding-top:80px;
-}
-
-.hero::before{
-content:"";
-position:absolute;
-width:700px;
-height:700px;
-background:radial-gradient(circle,var(--primary),transparent 70%);
-top:-250px;
-left:50%;
-transform:translateX(-50%);
-opacity:.15;
-animation:floatGlow 6s ease-in-out infinite alternate;
-z-index:-1;
-}
-
-@keyframes floatGlow{
-0%{transform:translateX(-50%) translateY(0)}
-100%{transform:translateX(-50%) translateY(40px)}
+padding:100px 20px;
 }
 
 h1{
-font-size:clamp(2.8rem,6vw,4.2rem);
-margin-bottom:15px;
+font-size:4rem;
 font-weight:800;
 }
 
 .subtitle{
-max-width:700px;
-margin:auto;
-color:var(--muted);
-font-size:clamp(1rem,2.4vw,1.2rem);
-}
-
-.btn{
-border-radius:12px;
-padding:13px 22px;
-text-decoration:none;
-font-weight:700;
-border:1px solid var(--line);
-background:var(--chip);
-color:var(--text);
-transition:.3s ease;
-display:inline-block;
-}
-
-.btn.primary{
-background:linear-gradient(90deg,var(--primary),var(--secondary));
-color:#fff;
-border:none;
-position:relative;
-overflow:hidden;
-}
-
-.btn.primary::after{
-content:"";
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
-transition:.7s;
-}
-
-.btn.primary:hover::after{
-left:100%;
-}
-
-.btn:hover{transform:translateY(-4px)}
-
-/* CARDS */
-.grid-3{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:18px;
-margin-top:30px;
-}
-
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-transition:.35s ease;
-}
-
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 20px 50px rgba(0,0,0,.2);
-border-color:var(--primary);
-}
-
-/* REVEAL */
-.reveal{
-opacity:0;
-transform:translateY(40px);
-transition:.7s ease;
-}
-.reveal.active{
-opacity:1;
-transform:translateY(0);
-}
-
-/* SCROLL BAR */
-#progressBar{
-position:fixed;
-top:0;
-left:0;
-height:3px;
-width:0%;
-background:linear-gradient(90deg,var(--primary),var(--secondary));
-z-index:2000;
-}
-
-/* WHATSAPP */
-.whatsapp-float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-border-radius:50%;
-width:55px;
-height:55px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:26px;
-text-decoration:none;
-box-shadow:0 8px 20px rgba(0,0,0,.3);
-z-index:1000;
-}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-.grid-3{grid-template-columns:1fr}
-.menu{
-position:absolute;
-top:60px;
-right:0;
-background:var(--nav);
-flex-direction:column;
-width:200px;
-padding:15px;
-display:none;
-border:1px solid var(--line);
-}
-.menu.show{display:flex}
-.mobile-toggle{display:block}
+margin-top:10px;
+opacity:.8;
 }
 </style>
 </head>
-
 <body>
 
-<div id="progressBar"></div>
-
-<nav class="nav">
-<div class="container nav-inner">
-<a class="brand" href="/">AZNORIX</a>
-<button class="mobile-toggle" id="mobileToggle">☰</button>
-<div class="menu" id="menu">
-<a href="/">Home</a>
-<a href="#about">About</a>
-<a href="#skills">Skills</a>
-<a href="#contact">Contact</a>
-<button class="pill" id="themeToggle">☀️</button>
-</div>
-</div>
-</nav>
-
-<section class="hero container reveal">
+<section>
 <div>
-<p style="color:var(--primary);font-weight:600;margin-bottom:10px;">
-Founder of Aznorix
-</p>
-
-<h1><span id="typing"></span></h1>
-
-<p class="subtitle">
-Software Engineer • System Architect • Performance Builder
-</p>
-
-<div style="margin-top:25px;">
-<a class="btn primary" href="https://wa.me/923393041514" target="_blank">
-Start a Conversation
-</a>
-</div>
+<h1>ANAS</h1>
+<p class="subtitle">Founder • Software Engineer • System Architect</p>
 </div>
 </section>
 
-<section id="about" class="container reveal">
-<h2>About</h2>
-<div class="card">
-<p>
-ANAS is the founder of Aznorix, focused on scalable web systems, Android development, and high-performance digital architecture.
-</p>
-</div>
+<section>
+<h2>Scroll Down</h2>
 </section>
-
-<section id="skills" class="container reveal">
-<h2>Technical Stack</h2>
-<div class="grid-3">
-<div class="card"><h3>Languages</h3><p>C++ • Python • C# • JavaScript</p></div>
-<div class="card"><h3>Development</h3><p>Web Apps • Android • Automation</p></div>
-<div class="card"><h3>Tools</h3><p>Blender • Unreal • .NET • Git</p></div>
-</div>
-</section>
-
-<section id="contact" class="container reveal">
-<h2>Contact</h2>
-<div class="card">
-<p>📧 anasgb496@outlook.com</p>
-<p>📍 Karachi, Pakistan</p>
-<p>💻 github.com/Anas-gb</p>
-<p>📱 +92 339 3041514</p>
-</div>
-</section>
-
-<footer style="text-align:center;padding:30px 0;color:var(--muted);">
-© 2026 ANAS — Founder of Aznorix
-</footer>
-
-<a href="https://wa.me/923393041514" class="whatsapp-float" target="_blank">💬</a>
 
 <script>
-// Mobile Menu
-const menu=document.getElementById("menu");
-document.getElementById("mobileToggle").onclick=()=>menu.classList.toggle("show");
+/* =========================
+   SCENE SETUP
+========================= */
 
-// Theme Toggle
-const root=document.documentElement;
-const themeToggle=document.getElementById("themeToggle");
-const savedTheme=localStorage.getItem("theme")||"light";
-root.classList.toggle("theme-light",savedTheme==="light");
-themeToggle.textContent=savedTheme==="light"?"☀️":"🌙";
+const scene = new THREE.Scene();
 
-themeToggle.onclick=()=>{
-const isLight=root.classList.toggle("theme-light");
-localStorage.setItem("theme",isLight?"light":"dark");
-themeToggle.textContent=isLight?"☀️":"🌙";
-};
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth / window.innerHeight,
+0.1,
+1000
+);
+camera.position.z = 8;
 
-// Scroll Reveal
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting) entry.target.classList.add("active");
+const renderer = new THREE.WebGLRenderer({
+antialias: true,
+alpha: true
 });
-},{threshold:.2});
-document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
 
-// Scroll Progress
-window.onscroll=()=>{
-let winScroll=document.documentElement.scrollTop;
-let height=document.documentElement.scrollHeight-document.documentElement.clientHeight;
-document.getElementById("progressBar").style.width=(winScroll/height)*100+"%";
-};
+/* =========================
+   SHADER GRADIENT SPHERE
+========================= */
 
-// Typing Animation
-const text="ANAS";
-let index=0;
-const typing=document.getElementById("typing");
+const geometry = new THREE.IcosahedronGeometry(2, 32);
 
-function typeEffect(){
-if(index<text.length){
-typing.textContent+=text.charAt(index);
-index++;
-setTimeout(typeEffect,90);
-}}
-typeEffect();
+const material = new THREE.ShaderMaterial({
+uniforms: {
+uTime: { value: 0 }
+},
+vertexShader: `
+uniform float uTime;
+varying vec2 vUv;
+
+void main(){
+vUv = uv;
+
+vec3 pos = position;
+pos += normal * sin(uTime + position.y * 4.0) * 0.15;
+
+gl_Position = projectionMatrix *
+modelViewMatrix *
+vec4(pos, 1.0);
+}
+`,
+fragmentShader: `
+varying vec2 vUv;
+
+void main(){
+vec3 topColor = vec3(0.1, 0.8, 0.7);
+vec3 bottomColor = vec3(0.9, 0.4, 0.1);
+
+vec3 finalColor = mix(topColor, bottomColor, vUv.y);
+
+gl_FragColor = vec4(finalColor, 1.0);
+}
+`
+});
+
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+/* =========================
+   PARTICLE GALAXY
+========================= */
+
+const particleCount = 3000;
+const particlesGeometry = new THREE.BufferGeometry();
+const positions = new Float32Array(particleCount * 3);
+
+for (let i = 0; i < particleCount * 3; i++) {
+positions[i] = (Math.random() - 0.5) * 40;
+}
+
+particlesGeometry.setAttribute(
+"position",
+new THREE.BufferAttribute(positions, 3)
+);
+
+const particlesMaterial = new THREE.PointsMaterial({
+size: 0.03,
+color: 0x14b8a6
+});
+
+const particles = new THREE.Points(
+particlesGeometry,
+particlesMaterial
+);
+
+scene.add(particles);
+
+/* =========================
+   3D TEXT GEOMETRY
+========================= */
+
+const fontLoader = new THREE.FontLoader();
+
+fontLoader.load(
+"https://threejs.org/examples/fonts/helvetiker_bold.typeface.json",
+function (font) {
+
+const textGeometry = new THREE.TextGeometry("ANAS", {
+font: font,
+size: 1,
+height: 0.25,
+curveSegments: 12,
+bevelEnabled: true,
+bevelThickness: 0.05,
+bevelSize: 0.03,
+bevelSegments: 5
+});
+
+textGeometry.center();
+
+const textMaterial = new THREE.MeshStandardMaterial({
+color: 0xffffff,
+metalness: 0.8,
+roughness: 0.2
+});
+
+const textMesh = new THREE.Mesh(
+textGeometry,
+textMaterial
+);
+
+textMesh.position.y = -3;
+scene.add(textMesh);
+
+}
+);
+
+/* =========================
+   LIGHTING
+========================= */
+
+const light1 = new THREE.PointLight(0xffffff, 1.5);
+light1.position.set(5, 5, 5);
+scene.add(light1);
+
+const light2 = new THREE.PointLight(0xff8844, 1);
+light2.position.set(-5, -5, -5);
+scene.add(light2);
+
+/* =========================
+   SCROLL DISTORTION
+========================= */
+
+window.addEventListener("scroll", () => {
+const scrollY = window.scrollY;
+
+sphere.rotation.x = scrollY * 0.002;
+sphere.rotation.y = scrollY * 0.002;
+});
+
+/* =========================
+   MOUSE INTERACTION
+========================= */
+
+window.addEventListener("mousemove", (e) => {
+
+const x = (e.clientX / window.innerWidth - 0.5) * 2;
+const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+sphere.rotation.x += y * 0.01;
+sphere.rotation.y += x * 0.01;
+
+});
+
+/* =========================
+   ANIMATION LOOP
+========================= */
+
+const clock = new THREE.Clock();
+
+function animate() {
+requestAnimationFrame(animate);
+
+material.uniforms.uTime.value = clock.getElapsedTime();
+
+particles.rotation.y += 0.0005;
+
+renderer.render(scene, camera);
+}
+
+animate();
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+window.addEventListener("resize", () => {
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth, window.innerHeight);
+});
 </script>
 
 </body>
