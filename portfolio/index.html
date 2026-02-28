@@ -3,22 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANAS | WebGL Portfolio</title>
+<title>ANAS | Founder of Aznorix</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/examples/js/loaders/FontLoader.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r155/examples/js/geometries/TextGeometry.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <style>
+:root{
+--bg:#0f172a;
+--text:#ffffff;
+--glass:rgba(255,255,255,0.08);
+--border:rgba(255,255,255,0.15);
+--accent:#14b8a6;
+}
+
+.light{
+--bg:#f8fafc;
+--text:#0f172a;
+--glass:rgba(0,0,0,0.05);
+--border:rgba(0,0,0,0.1);
+--accent:#0f766e;
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
 font-family:'Outfit',sans-serif;
-background:#0f172a;
-color:#ffffff;
+background:var(--bg);
+color:var(--text);
 overflow-x:hidden;
+transition:background .6s ease,color .6s ease;
 }
 
 canvas{
@@ -28,236 +47,241 @@ left:0;
 z-index:-1;
 }
 
+.loader{
+position:fixed;
+inset:0;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+font-size:2rem;
+letter-spacing:8px;
+color:#14b8a6;
+}
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+backdrop-filter:blur(20px);
+background:var(--glass);
+border-bottom:1px solid var(--border);
+z-index:100;
+}
+
+nav button{
+background:none;
+border:1px solid var(--accent);
+color:var(--accent);
+padding:6px 14px;
+border-radius:20px;
+cursor:pointer;
+transition:.3s;
+}
+
+nav button:hover{
+background:var(--accent);
+color:#fff;
+}
+
 section{
 min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
+padding:120px 20px;
+}
+
+.container{
+max-width:1000px;
+width:100%;
 text-align:center;
-padding:100px 20px;
+}
+
+.glass{
+background:var(--glass);
+backdrop-filter:blur(25px);
+border:1px solid var(--border);
+border-radius:24px;
+padding:60px;
 }
 
 h1{
-font-size:4rem;
+font-size:clamp(3rem,6vw,5rem);
 font-weight:800;
+}
+
+h2{
+font-size:2rem;
+margin-bottom:20px;
+}
+
+p{
+line-height:1.7;
+opacity:.85;
 }
 
 .subtitle{
 margin-top:10px;
 opacity:.8;
+font-weight:500;
+}
+
+.social a{
+margin:0 12px;
+text-decoration:none;
+color:var(--accent);
+font-weight:600;
+}
+
+footer{
+text-align:center;
+padding:60px 20px;
+opacity:.6;
 }
 </style>
 </head>
 <body>
 
-<section>
-<div>
+<div class="loader">ANAS</div>
+
+<nav>
+<div><strong>AZNORIX</strong></div>
+<button id="themeToggle">Toggle Mode</button>
+</nav>
+
+<section class="hero">
+<div class="container">
 <h1>ANAS</h1>
 <p class="subtitle">Founder • Software Engineer • System Architect</p>
 </div>
 </section>
 
 <section>
-<h2>Scroll Down</h2>
+<div class="container glass">
+<h2>About</h2>
+<p>
+I am the founder of Aznorix — an independent software studio focused on engineering scalable web systems, 
+high-performance applications, and structured digital architectures.
+</p>
+<br>
+<p>
+My focus is not on trends, but on building systems that are optimized, production-ready, and technically sound.
+I work across frontend engineering, backend logic, automation, and 3D interactive web experiences.
+</p>
+</div>
 </section>
 
+<section>
+<div class="container glass">
+<h2>Core Expertise</h2>
+<p><strong>Languages:</strong> C++, Python, JavaScript, C#</p>
+<p><strong>Systems:</strong> Web Applications, Android Development, Automation Tools</p>
+<p><strong>Graphics:</strong> WebGL, Three.js, Shader Programming</p>
+</div>
+</section>
+
+<section>
+<div class="container glass">
+<h2>Vision</h2>
+<p>
+My long-term objective is to build engineering-focused products that combine performance, clean architecture, 
+and advanced interactive user experiences.
+</p>
+</div>
+</section>
+
+<section>
+<div class="container glass">
+<h2>Connect</h2>
+<div class="social">
+<a href="https://github.com/anas-gb" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/anas-708372300/" target="_blank">LinkedIn</a>
+<a href="https://tiktok.com/@its_coder999" target="_blank">TikTok</a>
+</div>
+</div>
+</section>
+
+<footer>
+© 2026 ANAS — Founder of Aznorix
+</footer>
+
 <script>
-/* =========================
-   SCENE SETUP
-========================= */
-
-const scene = new THREE.Scene();
-
-const camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth / window.innerHeight,
-0.1,
-1000
-);
-camera.position.z = 8;
-
-const renderer = new THREE.WebGLRenderer({
-antialias: true,
-alpha: true
+window.addEventListener("load",()=>{
+gsap.to(".loader",{opacity:0,duration:1.5,delay:1,onComplete:()=>{
+document.querySelector(".loader").style.display="none";
+}});
 });
-renderer.setSize(window.innerWidth, window.innerHeight);
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+camera.position.z=8;
+
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
-/* =========================
-   SHADER GRADIENT SPHERE
-========================= */
+const geometry=new THREE.IcosahedronGeometry(2,32);
 
-const geometry = new THREE.IcosahedronGeometry(2, 32);
-
-const material = new THREE.ShaderMaterial({
-uniforms: {
-uTime: { value: 0 }
-},
-vertexShader: `
-uniform float uTime;
-varying vec2 vUv;
-
-void main(){
-vUv = uv;
-
-vec3 pos = position;
-pos += normal * sin(uTime + position.y * 4.0) * 0.15;
-
-gl_Position = projectionMatrix *
-modelViewMatrix *
-vec4(pos, 1.0);
-}
-`,
-fragmentShader: `
-varying vec2 vUv;
-
-void main(){
-vec3 topColor = vec3(0.1, 0.8, 0.7);
-vec3 bottomColor = vec3(0.9, 0.4, 0.1);
-
-vec3 finalColor = mix(topColor, bottomColor, vUv.y);
-
-gl_FragColor = vec4(finalColor, 1.0);
-}
-`
+const material=new THREE.ShaderMaterial({
+uniforms:{uTime:{value:0}},
+vertexShader:`uniform float uTime;varying vec2 vUv;
+void main(){vUv=uv;vec3 pos=position;
+pos+=normal*sin(uTime+position.y*4.0)*0.15;
+gl_Position=projectionMatrix*modelViewMatrix*vec4(pos,1.0);}`,
+fragmentShader:`varying vec2 vUv;
+void main(){vec3 a=vec3(0.1,0.8,0.7);
+vec3 b=vec3(0.9,0.4,0.1);
+gl_FragColor=vec4(mix(a,b,vUv.y),1.0);}`
 });
 
-const sphere = new THREE.Mesh(geometry, material);
+const sphere=new THREE.Mesh(geometry,material);
 scene.add(sphere);
 
-/* =========================
-   PARTICLE GALAXY
-========================= */
-
-const particleCount = 3000;
-const particlesGeometry = new THREE.BufferGeometry();
-const positions = new Float32Array(particleCount * 3);
-
-for (let i = 0; i < particleCount * 3; i++) {
-positions[i] = (Math.random() - 0.5) * 40;
-}
-
-particlesGeometry.setAttribute(
-"position",
-new THREE.BufferAttribute(positions, 3)
-);
-
-const particlesMaterial = new THREE.PointsMaterial({
-size: 0.03,
-color: 0x14b8a6
-});
-
-const particles = new THREE.Points(
-particlesGeometry,
-particlesMaterial
-);
-
+const particlesGeo=new THREE.BufferGeometry();
+const count=3000;
+const pos=new Float32Array(count*3);
+for(let i=0;i<count*3;i++){pos[i]=(Math.random()-0.5)*40;}
+particlesGeo.setAttribute("position",new THREE.BufferAttribute(pos,3));
+const particles=new THREE.Points(particlesGeo,new THREE.PointsMaterial({size:0.03,color:0x14b8a6}));
 scene.add(particles);
 
-/* =========================
-   3D TEXT GEOMETRY
-========================= */
+const light=new THREE.PointLight(0xffffff,1.5);
+light.position.set(5,5,5);
+scene.add(light);
 
-const fontLoader = new THREE.FontLoader();
-
-fontLoader.load(
-"https://threejs.org/examples/fonts/helvetiker_bold.typeface.json",
-function (font) {
-
-const textGeometry = new THREE.TextGeometry("ANAS", {
-font: font,
-size: 1,
-height: 0.25,
-curveSegments: 12,
-bevelEnabled: true,
-bevelThickness: 0.05,
-bevelSize: 0.03,
-bevelSegments: 5
-});
-
-textGeometry.center();
-
-const textMaterial = new THREE.MeshStandardMaterial({
-color: 0xffffff,
-metalness: 0.8,
-roughness: 0.2
-});
-
-const textMesh = new THREE.Mesh(
-textGeometry,
-textMaterial
-);
-
-textMesh.position.y = -3;
-scene.add(textMesh);
-
-}
-);
-
-/* =========================
-   LIGHTING
-========================= */
-
-const light1 = new THREE.PointLight(0xffffff, 1.5);
-light1.position.set(5, 5, 5);
-scene.add(light1);
-
-const light2 = new THREE.PointLight(0xff8844, 1);
-light2.position.set(-5, -5, -5);
-scene.add(light2);
-
-/* =========================
-   SCROLL DISTORTION
-========================= */
-
-window.addEventListener("scroll", () => {
-const scrollY = window.scrollY;
-
-sphere.rotation.x = scrollY * 0.002;
-sphere.rotation.y = scrollY * 0.002;
-});
-
-/* =========================
-   MOUSE INTERACTION
-========================= */
-
-window.addEventListener("mousemove", (e) => {
-
-const x = (e.clientX / window.innerWidth - 0.5) * 2;
-const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-sphere.rotation.x += y * 0.01;
-sphere.rotation.y += x * 0.01;
-
-});
-
-/* =========================
-   ANIMATION LOOP
-========================= */
-
-const clock = new THREE.Clock();
-
-function animate() {
+const clock=new THREE.Clock();
+function animate(){
 requestAnimationFrame(animate);
-
-material.uniforms.uTime.value = clock.getElapsedTime();
-
-particles.rotation.y += 0.0005;
-
-renderer.render(scene, camera);
+material.uniforms.uTime.value=clock.getElapsedTime();
+particles.rotation.y+=0.0005;
+renderer.render(scene,camera);
 }
-
 animate();
 
-/* =========================
-   RESPONSIVE
-========================= */
+window.addEventListener("scroll",()=>{
+sphere.rotation.x=window.scrollY*0.002;
+sphere.rotation.y=window.scrollY*0.002;
+});
 
-window.addEventListener("resize", () => {
-camera.aspect = window.innerWidth / window.innerHeight;
+window.addEventListener("mousemove",e=>{
+sphere.rotation.y+=((e.clientX/window.innerWidth)-0.5)*0.02;
+});
+
+document.getElementById("themeToggle").onclick=()=>{
+document.body.classList.toggle("light");
+};
+
+window.addEventListener("resize",()=>{
+camera.aspect=window.innerWidth/window.innerHeight;
 camera.updateProjectionMatrix();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(window.innerWidth,window.innerHeight);
 });
 </script>
 
